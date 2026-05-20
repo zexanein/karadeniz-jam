@@ -8,4 +8,8 @@ public class ItemBlueprint : ScriptableObject
     public Sprite itemIcon;
     public int fairPrice;
     public int netWeightGrams;
+    public Vector3 panOffset;
+    public Vector3 panRotation;
+    public float colliderRadius = 0.7f;
+    public Vector2 randomRange = Vector2.up;
 }

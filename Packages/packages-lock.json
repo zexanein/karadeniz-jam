@@ -302,6 +302,13 @@
       },
       "url": "https://packages.unity.com"
     },
+    "com.zexaworks.foundation": {
+      "version": "https://github.com/zexanein/com.zexaworks.foundation.git",
+      "depth": 0,
+      "source": "git",
+      "dependencies": {},
+      "hash": "de78a98cdeb105b77c91b228d4813dbed836137d"
+    },
     "com.unity.modules.accessibility": {
       "version": "1.0.0",
       "depth": 0,

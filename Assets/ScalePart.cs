@@ -36,6 +36,7 @@ public class ScalePart : MonoBehaviour
         if (_hoverSwingTween != null && _hoverSwingTween.IsActive())
             return;
 
+        Soundmanager.ScaleEffectSound = true;
         var target = transform.parent;
         _baseLocalRotation = target.localRotation;
 

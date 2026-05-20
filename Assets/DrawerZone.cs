@@ -1,15 +1,39 @@
-using System;
 using UnityEngine;
 
 public class DrawerZone : MonoBehaviour
 {
-    private void OnMouseEnter()
+    [SerializeField] private Collider2D zoneCollider;
+    [SerializeField] private Collider2D areaCollider;
+
+    private bool _isHovering;
+
+    private void Reset()
     {
-        InteractionManager.Instance.HoveringDrawerZone = true;
+        zoneCollider = GetComponent<Collider2D>();
     }
-    
-    private void OnMouseExit()
+
+    private void Update()
     {
-        InteractionManager.Instance.HoveringDrawerZone = false;
+        if (areaCollider == null || Camera.main == null) return;
+
+        Vector3 worldPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        bool inside = areaCollider.OverlapPoint(worldPos);
+
+        if (inside != _isHovering)
+        {
+            _isHovering = inside;
+            InteractionManager.Instance.HoveringDrawerZone = _isHovering;
+        }
+    }
+
+    private void OnDisable()
+    {
+        // Component kapatılırsa state'i temizle, asılı kalmasın
+        if (_isHovering)
+        {
+            _isHovering = false;
+            if (InteractionManager.Instance != null)
+                InteractionManager.Instance.HoveringDrawerZone = false;
+        }
     }
 }

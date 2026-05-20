@@ -25,7 +25,8 @@ public class BalanceItem : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
     {
         increaseButton.onClick.RemoveListener(IncreaseAmountByOne);
         decreaseButton.onClick.AddListener(DecreaseAmountByOne);
-        InventoryManager.Instance.OnInventoryUpdated -= UpdateButtonStates;
+        if (InventoryManager.Instance != null)
+            InventoryManager.Instance.OnInventoryUpdated -= UpdateButtonStates;
     }
 
     private void UpdateButtonStates()
@@ -37,7 +38,7 @@ public class BalanceItem : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
     public void Initialize(ItemEntry entry, bool isLeftSide)
     {
         iconImage.sprite = entry.blueprint.itemIcon;
-        amountText.text = "x" + entry.quantity;
+        amountText.text = entry.quantity.ToString();
         
         increaseButton.interactable = InventoryManager.Instance.HasItem(entry.blueprint.id, entry.quantity + 1);
         decreaseButton.interactable = entry.quantity > 0;
@@ -49,7 +50,6 @@ public class BalanceItem : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
     
     private void DecreaseAmountByOne()
     {
-        Debug.Log("Decrease");
         if (isLeft) BalanceManager.Instance.AddToLeft(_cachedEntry, -1);
         else BalanceManager.Instance.AddToRight(_cachedEntry, -1);
         

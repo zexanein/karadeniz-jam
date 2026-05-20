@@ -20,12 +20,21 @@ public class ItemRegistry : BehaviourSingleton<ItemRegistry>
         var randomIndex = UnityEngine.Random.Range(0, blueprints.Count);
         return blueprints[randomIndex];
     }
+    
+    public List<ItemBlueprint> GetAllBlueprints()
+    {
+        return blueprints;
+    }
+
+    public List<ItemEntry> starterItems = new();
 
     private void Start()
     {
-        SpawnItemToDesk("pear");
-        SpawnItemToDesk("pear");
-        SpawnItemToDesk("watermelon");
+        foreach (var entry in starterItems)
+        {   
+            InventoryManager.Instance.AddItem(entry.blueprint, entry.quantity);
+            InventoryManager.Instance.AddToDrawer(entry.blueprint, entry.quantity);
+        }
     }
     
     public void SpawnItemToDesk(string itemId, int quantity = 1)
@@ -90,10 +99,8 @@ public class ItemRegistry : BehaviourSingleton<ItemRegistry>
     public void SpawnItemToDrawer(string itemId, int quantity = 1)
     {
         var blueprint = blueprints.Find(b => b.id == itemId);
-        Debug.Log($"Lorem  item {itemId} with {quantity} items");
         if (blueprint == null)
         {
-            Debug.LogError($"Item with ID {itemId} not found in registry.");
             return;
         }
 
@@ -104,7 +111,9 @@ public class ItemRegistry : BehaviourSingleton<ItemRegistry>
                 UnityEngine.Random.Range(drawerSpawnArea.bounds.min.y, drawerSpawnArea.bounds.max.y)
             );
             
-            var newItem = Instantiate(itemPrefab, randomPosition, Quaternion.identity);
+            var randomRotation = Quaternion.Euler(0, 0, UnityEngine.Random.Range(0f, 360f));
+            
+            var newItem = Instantiate(itemPrefab, randomPosition, randomRotation);
             newItem.InDrawer = true;
             newItem.SetDrawerSortingLayer();
             newItem.SetEntry(new ItemEntry { blueprint = blueprint, quantity = 1 });

@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ae6b0417644de6149a956ee646dcc383, type: 3}
+  m_Name: 1kg
+  m_EditorClassIdentifier: 
+  id: one_kg
+  itemName: 1 Kilo
+  itemIcon: {fileID: -1499151358781168214, guid: eafaa97359a1c1c43ad9555846e475a7, type: 3}
+  fairPrice: 100
+  netWeightGrams: 1000
+  panOffset: {x: 0, y: 0, z: 0}
+  panRotation: {x: 0, y: 0, z: 0}
+  colliderRadius: 0.3
+  randomRange: {x: 1, y: 1}

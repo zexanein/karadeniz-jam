@@ -1,13 +1,15 @@
-using System;
-using System.Collections;
 using DG.Tweening;
 using UnityEngine;
 
 public class DraggableItem : MonoBehaviour
 {
     public ItemEntry ItemEntry { get; private set; }
-    [SerializeField] private Collider2D colliderSelf;
+    [SerializeField] private CircleCollider2D colliderSelf;
     [SerializeField] private SpriteRenderer spriteRenderer;
+    
+    public SpriteRenderer SpriteRenderer => spriteRenderer;
+    public bool IsInteractable => colliderSelf != null && colliderSelf.enabled;
+    
     private float _initialScale;
     private Tween _scaleTween;
     public bool InDrawer { get; set; }
@@ -20,6 +22,7 @@ public class DraggableItem : MonoBehaviour
     public void SetEntry(ItemEntry entry)
     {
         ItemEntry = entry;
+        colliderSelf.radius = entry.blueprint.colliderRadius;
         spriteRenderer.sprite = entry.blueprint.itemIcon;
     }
     
@@ -31,26 +34,6 @@ public class DraggableItem : MonoBehaviour
     public void SetDefaultSortingLayer()
     {
         spriteRenderer.sortingLayerName = "Default";
-    }
-
-    private void OnMouseOver()
-    {
-        InteractionManager.Instance.OnItemHover(this);
-    }
-
-    private void OnMouseExit()
-    {
-        InteractionManager.Instance.OnItemUnhover(this);
-    }
-
-    private void OnMouseDown()
-    {
-        InteractionManager.Instance.OnItemSelect(this);
-    }
-    
-    private void OnMouseUp()
-    {
-        InteractionManager.Instance.DropItem();
     }
     
     public void ScaleUp()
@@ -68,10 +51,5 @@ public class DraggableItem : MonoBehaviour
     public void ToggleCollider(bool state)
     {
         colliderSelf.enabled = state;
-    }
-
-    private void OnMouseDrag()
-    {
-        InteractionManager.Instance.OnItemDrag(this);
     }
 }
